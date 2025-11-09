@@ -31,22 +31,25 @@ class handler(BaseHTTPRequestHandler):
             encrypted_text = data.get('encrypted_text', '')
             payload = data.get('payload', '')
             
-            if not payload or payload == '':
-                self.send_response(400)
-                self.send_header('Content-type', 'application/json')
-                self.send_header('Access-Control-Allow-Origin', '*')
-                self.end_headers()
-                error_msg = "Payload is required for decryption. Please encrypt a new message (old messages from before this update won't work)."
-                self.wfile.write(json.dumps({"success": False, "error": error_msg}).encode())
-                return
-            
-            # Decode the payload (stateless decryption for Vercel)
-            import base64
-            payload_json = base64.b64decode(payload.encode()).decode()
-            payload_data = json.loads(payload_json)
-            
-            decrypted_message = payload_data.get('text', '')
-            detected_emotions = payload_data.get('emotions', '')
+            # Try to use payload if available, otherwise use message store
+            if payload and payload != '':
+                # Decode the payload (stateless decryption for Vercel)
+                import base64
+                try:
+                    payload_json = base64.b64decode(payload.encode()).decode()
+                    payload_data = json.loads(payload_json)
+                    decrypted_message = payload_data.get('text', '')
+                    detected_emotions = payload_data.get('emotions', '')
+                except:
+                    # Fallback: try message store
+                    result = cipher.decrypt_message(encrypted_text)
+                    decrypted_message = result.get('original_text', 'Unable to decrypt - data not found')
+                    detected_emotions = result.get('detected_emotions', 'Unknown')
+            else:
+                # Try message store
+                result = cipher.decrypt_message(encrypted_text)
+                decrypted_message = result.get('original_text', 'Unable to decrypt - data not found')
+                detected_emotions = result.get('detected_emotions', 'Unknown')
             
             # Convert formatted string to array if needed
             if isinstance(detected_emotions, str):
