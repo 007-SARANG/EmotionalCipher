@@ -29,7 +29,6 @@ class handler(BaseHTTPRequestHandler):
             data = json.loads(post_data.decode('utf-8'))
             
             message = data.get('message', '')
-            password = data.get('password', 'default_password_123')
             
             if not message:
                 self.send_response(400)
@@ -39,7 +38,9 @@ class handler(BaseHTTPRequestHandler):
                 self.wfile.write(json.dumps({"error": "Message is required"}).encode())
                 return
             
-            encrypted_text, emotions = cipher.encrypt_message(message, password)
+            result = cipher.encrypt_message(message)
+            encrypted_text = result['encrypted_text']
+            emotions = result['emotions']
             
             self.send_response(200)
             self.send_header('Content-type', 'application/json')

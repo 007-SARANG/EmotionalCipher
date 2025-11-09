@@ -29,7 +29,6 @@ class handler(BaseHTTPRequestHandler):
             data = json.loads(post_data.decode('utf-8'))
             
             encrypted_text = data.get('encrypted_text', '')
-            password = data.get('password', 'default_password_123')
             
             if not encrypted_text:
                 self.send_response(400)
@@ -39,7 +38,9 @@ class handler(BaseHTTPRequestHandler):
                 self.wfile.write(json.dumps({"error": "Encrypted text is required"}).encode())
                 return
             
-            decrypted_message, emotions = cipher.decrypt_message(encrypted_text, password)
+            result = cipher.decrypt_message(encrypted_text)
+            decrypted_message = result['decrypted_text']
+            emotions = result['emotions']
             
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
