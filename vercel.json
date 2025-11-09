@@ -2,22 +2,22 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.py",
+      "src": "api/encrypt.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "api/decrypt.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/api/encrypt",
-      "dest": "api/index.py"
+      "dest": "api/encrypt.py"
     },
     {
       "src": "/api/decrypt",
-      "dest": "api/index.py"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
+      "dest": "api/decrypt.py"
     }
   ]
 }
