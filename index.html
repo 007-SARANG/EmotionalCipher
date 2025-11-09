@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🔐 EmotionCipher - Where Feelings Stay Readable!</title>
-    <meta name="description" content="Empathy Encryption - Where feelings stay readable but words stay private!">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔐</text></svg>">
     <style>
         * {
             margin: 0;
@@ -67,44 +65,20 @@
             }
         }
 
-        .info-banner {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 20px;
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
             margin-bottom: 30px;
-            color: #333;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        .info-banner h3 {
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-
-        .info-banner p {
-            margin: 5px 0;
-            line-height: 1.6;
-        }
-
-        .info-banner a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .info-banner a:hover {
-            text-decoration: underline;
-        }
-
-        .demo-card {
+        .card {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             color: #333;
             animation: fadeIn 0.5s ease-out;
-            margin-bottom: 30px;
         }
 
         @keyframes fadeIn {
@@ -112,7 +86,7 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        .demo-card h2 {
+        .card h2 {
             color: #667eea;
             margin-bottom: 20px;
             font-size: 1.8rem;
@@ -158,9 +132,32 @@
             overflow: hidden;
         }
 
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        button:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:active:before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-encrypt {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn-decrypt {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
         }
 
         .btn-example {
@@ -170,63 +167,152 @@
             min-width: 150px;
         }
 
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
         .output {
             background: #f8f9fa;
             border-radius: 10px;
             padding: 20px;
             margin-top: 20px;
             border-left: 5px solid #667eea;
+            min-height: 150px;
         }
 
-        .example-text {
+        .output.hidden {
+            display: none;
+        }
+
+        .output-label {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .encrypted-text {
+            background: #2c3e50;
+            color: #2ecc71;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            word-break: break-all;
+            margin: 10px 0;
+            animation: glitch 1s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+        }
+
+        .emotion-badges {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+
+        .emotion-badge {
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1rem;
+            animation: bounce 1s infinite;
+            display: inline-block;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .emotion-joy { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); color: #fff; }
+        .emotion-sadness { background: linear-gradient(135deg, #a8caba 0%, #5d4e6d 100%); color: #fff; }
+        .emotion-anger { background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%); color: #fff; }
+        .emotion-fear { background: linear-gradient(135deg, #4b4b4b 0%, #6d6d6d 100%); color: #fff; }
+        .emotion-anxiety { background: linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%); color: #fff; }
+        .emotion-excitement { background: linear-gradient(135deg, #f2994a 0%, #f2c94c 100%); color: #fff; }
+        .emotion-surprise { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: #fff; }
+        .emotion-neutral { background: linear-gradient(135deg, #e0e0e0 0%, #b0b0b0 100%); color: #333; }
+
+        .decrypted-text {
             background: #e8f5e9;
             padding: 15px;
             border-radius: 8px;
+            border-left: 4px solid #4caf50;
             margin: 10px 0;
             font-size: 1.1rem;
-            border-left: 4px solid #4caf50;
         }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .feature-box {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 15px;
+        .loading {
+            display: none;
             text-align: center;
-        }
-
-        .feature-box h4 {
             font-size: 2rem;
-            margin-bottom: 10px;
+            animation: spin 1s linear infinite;
         }
 
-        .download-section {
+        .loading.active {
+            display: block;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .fun-facts {
             text-align: center;
             margin-top: 30px;
+            font-style: italic;
+            opacity: 0.8;
+            animation: fadeInOut 3s infinite;
         }
 
-        .download-btn {
-            display: inline-block;
-            padding: 20px 40px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-size: 1.2rem;
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
             font-weight: bold;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            transition: all 0.3s;
+            color: #ffd700;
         }
 
-        .download-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
         }
 
         .floating-emoji {
@@ -240,12 +326,6 @@
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
             50% { transform: translateY(-30px) rotate(180deg); }
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
-            }
         }
     </style>
 </head>
@@ -263,115 +343,262 @@
             <p class="tagline">Where Feelings Stay Readable, But Words Stay Private! 🎭</p>
         </div>
 
-        <!-- Info Banner -->
-        <div class="info-banner">
-            <h3>🎉 Welcome to EmotionCipher Demo!</h3>
-            <p><strong>Note:</strong> This is a static demo page. For the full interactive experience with real encryption:</p>
-            <p>📦 <a href="https://github.com/007-SARANG/EmotionalCipher" target="_blank">Download from GitHub</a> and run locally with: <code>python server.py</code></p>
-            <p>Or see the examples below to understand how it works! 👇</p>
-        </div>
-
-        <!-- Features Section -->
-        <div class="demo-card">
-            <h2>✨ Key Features</h2>
-            <div class="features-grid">
-                <div class="feature-box">
-                    <h4>🔐</h4>
-                    <p><strong>Real Encryption</strong><br>Text is cryptographically secured</p>
-                </div>
-                <div class="feature-box">
-                    <h4>🎭</h4>
-                    <p><strong>Emotion Detection</strong><br>7 emotions detected automatically</p>
-                </div>
-                <div class="feature-box">
-                    <h4>💝</h4>
-                    <p><strong>Empathy Preserved</strong><br>AI can see feelings, not words</p>
-                </div>
-                <div class="feature-box">
-                    <h4>🚀</h4>
-                    <p><strong>Two Interfaces</strong><br>Web GUI + CLI</p>
-                </div>
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="encryptCount">0</div>
+                <div class="stat-label">Messages Encrypted</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="emotionCount">0</div>
+                <div class="stat-label">Emotions Detected</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="decryptCount">0</div>
+                <div class="stat-label">Messages Decrypted</div>
             </div>
         </div>
 
-        <!-- Examples Section -->
-        <div class="demo-card">
-            <h2>📝 Example Demonstrations</h2>
-            
-            <h3 style="color: #667eea; margin-top: 20px;">Example 1: Mixed Emotions (Joy + Anxiety)</h3>
-            <div class="output">
-                <p><strong>Input:</strong></p>
-                <div class="example-text">
-                    "Feeling ecstatic about joining the new AI research team, though a bit anxious about the deadlines ahead."
+        <div class="main-content">
+            <!-- Encryption Section -->
+            <div class="card">
+                <h2>🔒 Encrypt Your Feelings</h2>
+                <textarea id="inputText" placeholder="Type your emotional message here... 
+Example: I'm so excited but also nervous about tomorrow!"></textarea>
+                
+                <div class="button-group">
+                    <button class="btn-encrypt" onclick="encryptMessage()">🔐 Encrypt!</button>
+                    <button class="btn-example" onclick="loadExample(1)">📝 Example 1</button>
+                    <button class="btn-example" onclick="loadExample(2)">📝 Example 2</button>
+                    <button class="btn-example" onclick="loadExample(3)">📝 Example 3</button>
                 </div>
-                <p style="margin-top: 15px;"><strong>Encrypted Text:</strong> <code style="background: #2c3e50; color: #2ecc71; padding: 5px 10px; border-radius: 5px;">fnup9WaKkkhg0AN4</code></p>
-                <p style="margin-top: 10px;"><strong>Detected Emotions:</strong> 😰 Anxiety + 😊 Joy + 😱 Fear</p>
-                <p style="margin-top: 10px;"><strong>AI Can See:</strong> Emotions are preserved in encrypted signature!</p>
+
+                <div class="loading" id="encryptLoading">⚡</div>
+
+                <div class="output hidden" id="encryptOutput">
+                    <div class="output-label">🎭 Detected Emotions:</div>
+                    <div class="emotion-badges" id="emotionBadges"></div>
+                    
+                    <div class="output-label">🔐 Encrypted Text:</div>
+                    <div class="encrypted-text" id="encryptedText"></div>
+                    
+                    <div class="output-label">🤖 AI Can See (without seeing your text!):</div>
+                    <div class="emotion-badges" id="aiEmotionBadges"></div>
+                </div>
             </div>
 
-            <h3 style="color: #667eea; margin-top: 30px;">Example 2: Negative Emotions (Sadness + Anger)</h3>
-            <div class="output">
-                <p><strong>Input:</strong></p>
-                <div class="example-text">
-                    "I can't believe I failed that test again. I'm so disappointed and frustrated right now."
+            <!-- Decryption Section -->
+            <div class="card">
+                <h2>🔓 Decrypt & Reveal</h2>
+                <textarea id="decryptInput" placeholder="Paste encrypted text here..." readonly style="background: #f0f0f0;"></textarea>
+                
+                <div class="button-group">
+                    <button class="btn-decrypt" onclick="decryptMessage()">🔓 Decrypt!</button>
                 </div>
-                <p style="margin-top: 15px;"><strong>Encrypted Text:</strong> <code style="background: #2c3e50; color: #2ecc71; padding: 5px 10px; border-radius: 5px;">tWxpQoUApL3@7112</code></p>
-                <p style="margin-top: 10px;"><strong>Detected Emotions:</strong> 😢 Sadness + 😡 Anger</p>
-                <p style="margin-top: 10px;"><strong>AI Can See:</strong> Negative emotions detected from encrypted data!</p>
-            </div>
 
-            <h3 style="color: #667eea; margin-top: 30px;">Example 3: Positive Emotions (Joy + Excitement)</h3>
-            <div class="output">
-                <p><strong>Input:</strong></p>
-                <div class="example-text">
-                    "Finally got the job offer! I'm thrilled and can't wait to start this new journey."
+                <div class="loading" id="decryptLoading">⚡</div>
+
+                <div class="output hidden" id="decryptOutput">
+                    <div class="output-label">✨ Original Message:</div>
+                    <div class="decrypted-text" id="decryptedText"></div>
+                    
+                    <div class="output-label">🎭 Verified Emotions:</div>
+                    <div class="emotion-badges" id="decryptEmotionBadges"></div>
                 </div>
-                <p style="margin-top: 15px;"><strong>Encrypted Text:</strong> <code style="background: #2c3e50; color: #2ecc71; padding: 5px 10px; border-radius: 5px;">rs1IeU2cA2LFjQIm</code></p>
-                <p style="margin-top: 10px;"><strong>Detected Emotions:</strong> 🎉 Excitement + 😊 Joy</p>
-                <p style="margin-top: 10px;"><strong>AI Can See:</strong> Positive emotions shine through encryption!</p>
             </div>
         </div>
 
-        <!-- Download Section -->
-        <div class="demo-card">
-            <h2>🚀 Try It Yourself!</h2>
-            <p style="text-align: center; font-size: 1.1rem; margin-bottom: 20px;">
-                Download the full application from GitHub to experience real-time encryption with both Web GUI and CLI!
-            </p>
-            <div class="download-section">
-                <a href="https://github.com/007-SARANG/EmotionalCipher" target="_blank" class="download-btn">
-                    📦 Download from GitHub
-                </a>
-            </div>
-            <div class="output" style="margin-top: 30px;">
-                <h4 style="color: #667eea;">Quick Start:</h4>
-                <pre style="background: #2c3e50; color: #2ecc71; padding: 15px; border-radius: 8px; overflow-x: auto;">
-# Clone the repository
-git clone https://github.com/007-SARANG/EmotionalCipher.git
-cd EmotionalCipher
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run Web GUI
-python server.py
-# Visit: http://localhost:5000
-
-# Or run CLI
-python main.py --demo
-                </pre>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div style="text-align: center; margin-top: 30px; opacity: 0.9;">
-            <p>🔐 EmotionCipher - Where Feelings Stay Readable, But Words Stay Private! 🎭</p>
-            <p style="margin-top: 10px;">
-                <a href="https://github.com/007-SARANG/EmotionalCipher" target="_blank" style="color: #fff; text-decoration: none;">
-                    ⭐ Star on GitHub
-                </a>
-            </p>
+        <div class="fun-facts" id="funFact">
+            💡 Fun Fact: Your emotions are mathematically encoded into the encrypted data!
         </div>
     </div>
+
+    <script>
+        // Example messages
+        const examples = {
+            1: "Feeling ecstatic about joining the new AI research team, though a bit anxious about the deadlines ahead.",
+            2: "I can't believe I failed that test again. I'm so disappointed and frustrated right now.",
+            3: "Finally got the job offer! I'm thrilled and can't wait to start this new journey."
+        };
+
+        // Fun facts
+        const funFacts = [
+            "💡 Fun Fact: Your emotions are mathematically encoded into the encrypted data!",
+            "🎭 Did you know? AI can understand your feelings without reading your text!",
+            "🔐 Security meets empathy: Your words stay private, your feelings stay readable!",
+            "🚀 EmotionCipher: Because robots need to understand humans too!",
+            "💝 Privacy + Empathy = The future of emotional AI!",
+            "🎪 Your feelings are encrypted as a binary emotion signature!",
+            "🌟 Multiple emotions? No problem! We detect them all!"
+        ];
+
+        let encryptCount = 0;
+        let emotionCount = 0;
+        let decryptCount = 0;
+        let currentEncryptedData = null;
+
+        // Rotate fun facts
+        setInterval(() => {
+            const randomFact = funFacts[Math.floor(Math.random() * funFacts.length)];
+            document.getElementById('funFact').textContent = randomFact;
+        }, 5000);
+
+        function loadExample(num) {
+            document.getElementById('inputText').value = examples[num];
+            document.getElementById('inputText').focus();
+        }
+
+        async function encryptMessage() {
+            const text = document.getElementById('inputText').value.trim();
+            
+            if (!text) {
+                alert('Please enter a message first! 😊');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('encryptLoading').classList.add('active');
+            document.getElementById('encryptOutput').classList.add('hidden');
+
+            try {
+                // Call Python backend (works both locally and on Vercel)
+                const apiUrl = window.location.hostname === 'localhost' 
+                    ? 'http://localhost:5000/encrypt' 
+                    : '/api/encrypt';
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text, password: 'default_password_123' })
+                });
+
+                const data = await response.json();
+                
+                // Hide loading
+                document.getElementById('encryptLoading').classList.remove('active');
+                
+                // Show results
+                displayEncryptedResults(data);
+                
+                // Update stats
+                encryptCount++;
+                emotionCount += data.emotions.length;
+                document.getElementById('encryptCount').textContent = encryptCount;
+                document.getElementById('emotionCount').textContent = emotionCount;
+                
+                // Store for decryption
+                currentEncryptedData = data;
+                document.getElementById('decryptInput').value = data.encrypted_text;
+                
+            } catch (error) {
+                document.getElementById('encryptLoading').classList.remove('active');
+                alert('Error: Make sure the Python server is running!\n\nRun: python server.py');
+                console.error(error);
+            }
+        }
+
+        function displayEncryptedResults(data) {
+            // Show emotions
+            const emotionBadges = document.getElementById('emotionBadges');
+            emotionBadges.innerHTML = '';
+            data.emotions.forEach(emotion => {
+                const badge = document.createElement('span');
+                badge.className = `emotion-badge emotion-${emotion.toLowerCase()}`;
+                badge.textContent = getEmotionEmoji(emotion) + ' ' + emotion;
+                emotionBadges.appendChild(badge);
+            });
+
+            // Show encrypted text
+            document.getElementById('encryptedText').textContent = data.encrypted_text;
+
+            // Show AI-visible emotions
+            const aiEmotionBadges = document.getElementById('aiEmotionBadges');
+            aiEmotionBadges.innerHTML = '';
+            data.emotions.forEach(emotion => {
+                const badge = document.createElement('span');
+                badge.className = `emotion-badge emotion-${emotion.toLowerCase()}`;
+                badge.textContent = getEmotionEmoji(emotion) + ' ' + emotion;
+                aiEmotionBadges.appendChild(badge);
+            });
+
+            // Show output
+            document.getElementById('encryptOutput').classList.remove('hidden');
+        }
+
+        async function decryptMessage() {
+            if (!currentEncryptedData) {
+                alert('Please encrypt a message first! 🔐');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('decryptLoading').classList.add('active');
+            document.getElementById('decryptOutput').classList.add('hidden');
+
+            try {
+                // Call Python backend (works both locally and on Vercel)
+                const apiUrl = window.location.hostname === 'localhost' 
+                    ? 'http://localhost:5000/decrypt' 
+                    : '/api/decrypt';
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        encrypted_text: currentEncryptedData.encrypted_text,
+                        password: 'default_password_123'
+                    })
+                });
+
+                const data = await response.json();
+                
+                // Hide loading
+                document.getElementById('decryptLoading').classList.remove('active');
+                
+                // Show results
+                displayDecryptedResults(data);
+                
+                // Update stats
+                decryptCount++;
+                document.getElementById('decryptCount').textContent = decryptCount;
+                
+            } catch (error) {
+                document.getElementById('decryptLoading').classList.remove('active');
+                alert('Error decrypting! Make sure the server is running.');
+                console.error(error);
+            }
+        }
+
+        function displayDecryptedResults(data) {
+            // Show decrypted text
+            document.getElementById('decryptedText').textContent = data.original_text;
+
+            // Show emotions
+            const emotionBadges = document.getElementById('decryptEmotionBadges');
+            emotionBadges.innerHTML = '';
+            data.emotions.forEach(emotion => {
+                const badge = document.createElement('span');
+                badge.className = `emotion-badge emotion-${emotion.toLowerCase()}`;
+                badge.textContent = getEmotionEmoji(emotion) + ' ' + emotion;
+                emotionBadges.appendChild(badge);
+            });
+
+            // Show output
+            document.getElementById('decryptOutput').classList.remove('hidden');
+        }
+
+        function getEmotionEmoji(emotion) {
+            const emojiMap = {
+                'Joy': '😊',
+                'Sadness': '😢',
+                'Anger': '😡',
+                'Fear': '😱',
+                'Anxiety': '😰',
+                'Excitement': '🎉',
+                'Surprise': '😲',
+                'Neutral': '😐'
+            };
+            return emojiMap[emotion] || '🎭';
+        }
+    </script>
 </body>
 </html>
