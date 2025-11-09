@@ -73,11 +73,10 @@ def decrypt():
             "error": str(e)
         }), 500
 
-# For Vercel serverless
-def handler(request):
-    with app.app_context():
-        return app.full_dispatch_request()
-
 # For local testing
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+
+# Export app for Vercel
+# Vercel will automatically detect this and use it
+handler = app
