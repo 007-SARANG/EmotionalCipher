@@ -3,8 +3,12 @@ EmotionCipher - Main Integration Module
 Combines emotion detection with encryption to create an empathy-preserving cipher.
 """
 
-from emotion_detector import EmotionDetector
-from cipher import EmotionPreservingCipher
+try:
+    from .emotion_detector import EmotionDetector
+    from .cipher import EmotionPreservingCipher
+except ImportError:
+    from emotion_detector import EmotionDetector
+    from cipher import EmotionPreservingCipher
 from typing import Dict, List
 
 

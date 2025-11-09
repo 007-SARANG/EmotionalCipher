@@ -55,11 +55,19 @@ class handler(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(response).encode())
             
         except Exception as e:
+            import traceback
+            error_details = traceback.format_exc()
+            print(f"Error in encrypt: {error_details}")
+            
             self.send_response(500)
             self.send_header('Content-type', 'application/json')
             self.send_header('Access-Control-Allow-Origin', '*')
             self.end_headers()
-            self.wfile.write(json.dumps({"success": False, "error": str(e)}).encode())
+            self.wfile.write(json.dumps({
+                "success": False, 
+                "error": str(e),
+                "details": error_details
+            }).encode())
     
     def do_OPTIONS(self):
         self.send_response(200)
