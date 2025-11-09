@@ -9,5 +9,5 @@ test_*.py
 screenshots/
 *.md
 !README.md
-index.html
 deploy/
+web/
