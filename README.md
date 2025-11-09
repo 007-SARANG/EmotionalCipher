@@ -9,9 +9,9 @@ EmotionCipher is an intelligent system that encrypts text messages while preserv
 
 ## 🎥 Video Demonstration
 
-**[📹 Watch the Demo Video Here](YOUR_YOUTUBE_LINK_HERE)**
+**[📹 Watch the Demo Video](screenshots/Screen%20Recording%202025-11-09%20172000.mp4)**
 
-*Replace the link above with your YouTube video demonstration*
+*Full demonstration showing encryption, emotion detection, and decryption in action!*
 
 ---
 
