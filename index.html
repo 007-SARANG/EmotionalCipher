@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔐 EmotionCipher - Where Feelings Stay Readable!</title>
+    <meta name="description" content="Empathy Encryption - Where feelings stay readable but words stay private!">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔐</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        }
+
+        .header .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .emoji-dance {
+            font-size: 4rem;
+            animation: dance 2s infinite;
+            display: inline-block;
+        }
+
+        @keyframes dance {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg) scale(1.1); }
+            75% { transform: rotate(10deg) scale(1.1); }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .info-banner {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            color: #333;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .info-banner h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .info-banner p {
+            margin: 5px 0;
+            line-height: 1.6;
+        }
+
+        .info-banner a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .info-banner a:hover {
+            text-decoration: underline;
+        }
+
+        .demo-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            color: #333;
+            animation: fadeIn 0.5s ease-out;
+            margin-bottom: 30px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .demo-card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 120px;
+            transition: all 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 20px rgba(118, 75, 162, 0.3);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            flex: 1;
+            padding: 15px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-example {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            flex: 0 0 auto;
+            min-width: 150px;
+        }
+
+        .output {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 5px solid #667eea;
+        }
+
+        .example-text {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 1.1rem;
+            border-left: 4px solid #4caf50;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .feature-box h4 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .download-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        .floating-emoji {
+            position: fixed;
+            font-size: 3rem;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating emojis for fun -->
+    <div class="floating-emoji" style="top: 10%; left: 5%;">😊</div>
+    <div class="floating-emoji" style="top: 70%; left: 90%; animation-delay: 1s;">😢</div>
+    <div class="floating-emoji" style="top: 30%; left: 95%; animation-delay: 2s;">😡</div>
+    <div class="floating-emoji" style="top: 80%; left: 10%; animation-delay: 3s;">😱</div>
+
+    <div class="container">
+        <div class="header">
+            <div class="emoji-dance">🔐</div>
+            <h1>EmotionCipher</h1>
+            <p class="tagline">Where Feelings Stay Readable, But Words Stay Private! 🎭</p>
+        </div>
+
+        <!-- Info Banner -->
+        <div class="info-banner">
+            <h3>🎉 Welcome to EmotionCipher Demo!</h3>
+            <p><strong>Note:</strong> This is a static demo page. For the full interactive experience with real encryption:</p>
+            <p>📦 <a href="https://github.com/007-SARANG/EmotionalCipher" target="_blank">Download from GitHub</a> and run locally with: <code>python server.py</code></p>
+            <p>Or see the examples below to understand how it works! 👇</p>
+        </div>
+
+        <!-- Features Section -->
+        <div class="demo-card">
+            <h2>✨ Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-box">
+                    <h4>🔐</h4>
+                    <p><strong>Real Encryption</strong><br>Text is cryptographically secured</p>
+                </div>
+                <div class="feature-box">
+                    <h4>🎭</h4>
+                    <p><strong>Emotion Detection</strong><br>7 emotions detected automatically</p>
+                </div>
+                <div class="feature-box">
+                    <h4>💝</h4>
+                    <p><strong>Empathy Preserved</strong><br>AI can see feelings, not words</p>
+                </div>
+                <div class="feature-box">
+                    <h4>🚀</h4>
+                    <p><strong>Two Interfaces</strong><br>Web GUI + CLI</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Examples Section -->
+        <div class="demo-card">
+            <h2>📝 Example Demonstrations</h2>
+            
+            <h3 style="color: #667eea; margin-top: 20px;">Example 1: Mixed Emotions (Joy + Anxiety)</h3>
+            <div class="output">
+                <p><strong>Input:</strong></p>
+                <div class="example-text">
+                    "Feeling ecstatic about joining the new AI research team, though a bit anxious about the deadlines ahead."
+                </div>
+                <p style="margin-top: 15px;"><strong>Encrypted Text:</strong> <code style="background: #2c3e50; color: #2ecc71; padding: 5px 10px; border-radius: 5px;">fnup9WaKkkhg0AN4</code></p>
+                <p style="margin-top: 10px;"><strong>Detected Emotions:</strong> 😰 Anxiety + 😊 Joy + 😱 Fear</p>
+                <p style="margin-top: 10px;"><strong>AI Can See:</strong> Emotions are preserved in encrypted signature!</p>
+            </div>
+
+            <h3 style="color: #667eea; margin-top: 30px;">Example 2: Negative Emotions (Sadness + Anger)</h3>
+            <div class="output">
+                <p><strong>Input:</strong></p>
+                <div class="example-text">
+                    "I can't believe I failed that test again. I'm so disappointed and frustrated right now."
+                </div>
+                <p style="margin-top: 15px;"><strong>Encrypted Text:</strong> <code style="background: #2c3e50; color: #2ecc71; padding: 5px 10px; border-radius: 5px;">tWxpQoUApL3@7112</code></p>
+                <p style="margin-top: 10px;"><strong>Detected Emotions:</strong> 😢 Sadness + 😡 Anger</p>
+                <p style="margin-top: 10px;"><strong>AI Can See:</strong> Negative emotions detected from encrypted data!</p>
+            </div>
+
+            <h3 style="color: #667eea; margin-top: 30px;">Example 3: Positive Emotions (Joy + Excitement)</h3>
+            <div class="output">
+                <p><strong>Input:</strong></p>
+                <div class="example-text">
+                    "Finally got the job offer! I'm thrilled and can't wait to start this new journey."
+                </div>
+                <p style="margin-top: 15px;"><strong>Encrypted Text:</strong> <code style="background: #2c3e50; color: #2ecc71; padding: 5px 10px; border-radius: 5px;">rs1IeU2cA2LFjQIm</code></p>
+                <p style="margin-top: 10px;"><strong>Detected Emotions:</strong> 🎉 Excitement + 😊 Joy</p>
+                <p style="margin-top: 10px;"><strong>AI Can See:</strong> Positive emotions shine through encryption!</p>
+            </div>
+        </div>
+
+        <!-- Download Section -->
+        <div class="demo-card">
+            <h2>🚀 Try It Yourself!</h2>
+            <p style="text-align: center; font-size: 1.1rem; margin-bottom: 20px;">
+                Download the full application from GitHub to experience real-time encryption with both Web GUI and CLI!
+            </p>
+            <div class="download-section">
+                <a href="https://github.com/007-SARANG/EmotionalCipher" target="_blank" class="download-btn">
+                    📦 Download from GitHub
+                </a>
+            </div>
+            <div class="output" style="margin-top: 30px;">
+                <h4 style="color: #667eea;">Quick Start:</h4>
+                <pre style="background: #2c3e50; color: #2ecc71; padding: 15px; border-radius: 8px; overflow-x: auto;">
+# Clone the repository
+git clone https://github.com/007-SARANG/EmotionalCipher.git
+cd EmotionalCipher
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run Web GUI
+python server.py
+# Visit: http://localhost:5000
+
+# Or run CLI
+python main.py --demo
+                </pre>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; margin-top: 30px; opacity: 0.9;">
+            <p>🔐 EmotionCipher - Where Feelings Stay Readable, But Words Stay Private! 🎭</p>
+            <p style="margin-top: 10px;">
+                <a href="https://github.com/007-SARANG/EmotionalCipher" target="_blank" style="color: #fff; text-decoration: none;">
+                    ⭐ Star on GitHub
+                </a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
