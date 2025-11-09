@@ -555,7 +555,7 @@ Example: I'm so excited but also nervous about tomorrow!"></textarea>
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
                         encrypted_text: currentEncryptedData.encrypted_text,
-                        payload: currentEncryptedData.payload
+                        payload: currentEncryptedData.payload || ''
                     })
                 });
 
@@ -563,6 +563,13 @@ Example: I'm so excited but also nervous about tomorrow!"></textarea>
                 
                 // Hide loading
                 document.getElementById('decryptLoading').classList.remove('active');
+                
+                // Check for errors
+                if (!response.ok || !data.success) {
+                    alert('Decryption failed: ' + (data.error || 'Unknown error'));
+                    console.error('API Error:', data);
+                    return;
+                }
                 
                 // Show results
                 displayDecryptedResults(data);
