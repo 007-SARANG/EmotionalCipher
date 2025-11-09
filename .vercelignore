@@ -1,6 +1,3 @@
-api/
-server.py
-*.py
 __pycache__/
 *.pyc
 .pytest_cache/
@@ -8,10 +5,9 @@ venv/
 env/
 .env
 *.bat
-tests/
 test_*.py
 screenshots/
 *.md
 !README.md
-LICENSE
-web/
+index.html
+deploy/

@@ -460,11 +460,15 @@ Example: I'm so excited but also nervous about tomorrow!"></textarea>
             document.getElementById('encryptOutput').classList.add('hidden');
 
             try {
-                // Call Python backend
-                const response = await fetch('http://localhost:5000/encrypt', {
+                // Call Python backend (works both locally and on Vercel)
+                const apiUrl = window.location.hostname === 'localhost' 
+                    ? 'http://localhost:5000/encrypt' 
+                    : '/api/encrypt';
+                
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text: text })
+                    body: JSON.stringify({ message: text, password: 'default_password_123' })
                 });
 
                 const data = await response.json();
@@ -531,12 +535,17 @@ Example: I'm so excited but also nervous about tomorrow!"></textarea>
             document.getElementById('decryptOutput').classList.add('hidden');
 
             try {
-                // Call Python backend
-                const response = await fetch('http://localhost:5000/decrypt', {
+                // Call Python backend (works both locally and on Vercel)
+                const apiUrl = window.location.hostname === 'localhost' 
+                    ? 'http://localhost:5000/decrypt' 
+                    : '/api/decrypt';
+                
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
-                        encrypted_text: currentEncryptedData.encrypted_text 
+                        encrypted_text: currentEncryptedData.encrypted_text,
+                        password: 'default_password_123'
                     })
                 });
 
