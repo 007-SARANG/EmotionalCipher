@@ -466,7 +466,7 @@ Example: I'm so excited but also nervous about tomorrow!"></textarea>
                 const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: text, password: 'default_password_123' })
+                    body: JSON.stringify({ text: text })
                 });
 
                 const data = await response.json();
