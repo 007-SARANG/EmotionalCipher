@@ -2,7 +2,7 @@
 
 > **Where Feelings Stay Readable, But Words Stay Private**
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://your-app.vercel.app)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://emotional-cipher.vercel.app/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
 
@@ -10,7 +10,7 @@ EmotionCipher is an intelligent system that encrypts text messages while preserv
 
 ## 🚀 Live Demo
 
-**Try it now:** [https://your-app.vercel.app](https://your-app.vercel.app)
+**Try it now:** [https://emotional-cipher.vercel.app/](https://emotional-cipher.vercel.app/)
 
 ## 🎥 Video Demonstration
 
