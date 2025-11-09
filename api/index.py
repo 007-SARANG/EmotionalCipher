@@ -71,6 +71,5 @@ def decrypt():
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
 
-# Export app for Vercel
-# Vercel will automatically detect this and use it
-handler = app
+# Vercel serverless function handler
+# The app variable is automatically used by Vercel
