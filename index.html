@@ -471,13 +471,20 @@ Example: I'm so excited but also nervous about tomorrow!"></textarea>
                 const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: text, password: 'default_password_123' })
+                    body: JSON.stringify({ message: text })
                 });
 
                 const data = await response.json();
                 
                 // Hide loading
                 document.getElementById('encryptLoading').classList.remove('active');
+                
+                // Check for errors
+                if (!response.ok || !data.success) {
+                    alert('Encryption failed: ' + (data.error || 'Unknown error') + '\n\n' + (data.details || ''));
+                    console.error('API Error:', data);
+                    return;
+                }
                 
                 // Show results
                 displayEncryptedResults(data);
