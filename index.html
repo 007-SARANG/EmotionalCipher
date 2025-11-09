@@ -499,6 +499,12 @@ Example: I'm so excited but also nervous about tomorrow!"></textarea>
                 currentEncryptedData = data;
                 console.log('Encrypted data:', data);
                 console.log('Has payload?', !!data.payload);
+                console.log('Payload value:', data.payload);
+                
+                if (!data.payload) {
+                    alert('WARNING: No payload in response! Decrypt may not work. API may still be deploying...');
+                }
+                
                 document.getElementById('decryptInput').value = data.encrypted_text;
                 
             } catch (error) {
