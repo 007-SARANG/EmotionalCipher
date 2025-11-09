@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔐 EmotionCipher - Where Feelings Stay Readable!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        }
+
+        .header .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .emoji-dance {
+            font-size: 4rem;
+            animation: dance 2s infinite;
+            display: inline-block;
+        }
+
+        @keyframes dance {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg) scale(1.1); }
+            75% { transform: rotate(10deg) scale(1.1); }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            color: #333;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 120px;
+            transition: all 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 20px rgba(118, 75, 162, 0.3);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            flex: 1;
+            padding: 15px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:active:before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-encrypt {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn-decrypt {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-example {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            flex: 0 0 auto;
+            min-width: 150px;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        .output {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 5px solid #667eea;
+            min-height: 150px;
+        }
+
+        .output.hidden {
+            display: none;
+        }
+
+        .output-label {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .encrypted-text {
+            background: #2c3e50;
+            color: #2ecc71;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            word-break: break-all;
+            margin: 10px 0;
+            animation: glitch 1s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+        }
+
+        .emotion-badges {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+
+        .emotion-badge {
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1rem;
+            animation: bounce 1s infinite;
+            display: inline-block;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .emotion-joy { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); color: #fff; }
+        .emotion-sadness { background: linear-gradient(135deg, #a8caba 0%, #5d4e6d 100%); color: #fff; }
+        .emotion-anger { background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%); color: #fff; }
+        .emotion-fear { background: linear-gradient(135deg, #4b4b4b 0%, #6d6d6d 100%); color: #fff; }
+        .emotion-anxiety { background: linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%); color: #fff; }
+        .emotion-excitement { background: linear-gradient(135deg, #f2994a 0%, #f2c94c 100%); color: #fff; }
+        .emotion-surprise { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: #fff; }
+        .emotion-neutral { background: linear-gradient(135deg, #e0e0e0 0%, #b0b0b0 100%); color: #333; }
+
+        .decrypted-text {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4caf50;
+            margin: 10px 0;
+            font-size: 1.1rem;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            font-size: 2rem;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .fun-facts {
+            text-align: center;
+            margin-top: 30px;
+            font-style: italic;
+            opacity: 0.8;
+            animation: fadeInOut 3s infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .floating-emoji {
+            position: fixed;
+            font-size: 3rem;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating emojis for fun -->
+    <div class="floating-emoji" style="top: 10%; left: 5%;">😊</div>
+    <div class="floating-emoji" style="top: 70%; left: 90%; animation-delay: 1s;">😢</div>
+    <div class="floating-emoji" style="top: 30%; left: 95%; animation-delay: 2s;">😡</div>
+    <div class="floating-emoji" style="top: 80%; left: 10%; animation-delay: 3s;">😱</div>
+
+    <div class="container">
+        <div class="header">
+            <div class="emoji-dance">🔐</div>
+            <h1>EmotionCipher</h1>
+            <p class="tagline">Where Feelings Stay Readable, But Words Stay Private! 🎭</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="encryptCount">0</div>
+                <div class="stat-label">Messages Encrypted</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="emotionCount">0</div>
+                <div class="stat-label">Emotions Detected</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="decryptCount">0</div>
+                <div class="stat-label">Messages Decrypted</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Encryption Section -->
+            <div class="card">
+                <h2>🔒 Encrypt Your Feelings</h2>
+                <textarea id="inputText" placeholder="Type your emotional message here... 
+Example: I'm so excited but also nervous about tomorrow!"></textarea>
+                
+                <div class="button-group">
+                    <button class="btn-encrypt" onclick="encryptMessage()">🔐 Encrypt!</button>
+                    <button class="btn-example" onclick="loadExample(1)">📝 Example 1</button>
+                    <button class="btn-example" onclick="loadExample(2)">📝 Example 2</button>
+                    <button class="btn-example" onclick="loadExample(3)">📝 Example 3</button>
+                </div>
+
+                <div class="loading" id="encryptLoading">⚡</div>
+
+                <div class="output hidden" id="encryptOutput">
+                    <div class="output-label">🎭 Detected Emotions:</div>
+                    <div class="emotion-badges" id="emotionBadges"></div>
+                    
+                    <div class="output-label">🔐 Encrypted Text:</div>
+                    <div class="encrypted-text" id="encryptedText"></div>
+                    
+                    <div class="output-label">🤖 AI Can See (without seeing your text!):</div>
+                    <div class="emotion-badges" id="aiEmotionBadges"></div>
+                </div>
+            </div>
+
+            <!-- Decryption Section -->
+            <div class="card">
+                <h2>🔓 Decrypt & Reveal</h2>
+                <textarea id="decryptInput" placeholder="Paste encrypted text here..." readonly style="background: #f0f0f0;"></textarea>
+                
+                <div class="button-group">
+                    <button class="btn-decrypt" onclick="decryptMessage()">🔓 Decrypt!</button>
+                </div>
+
+                <div class="loading" id="decryptLoading">⚡</div>
+
+                <div class="output hidden" id="decryptOutput">
+                    <div class="output-label">✨ Original Message:</div>
+                    <div class="decrypted-text" id="decryptedText"></div>
+                    
+                    <div class="output-label">🎭 Verified Emotions:</div>
+                    <div class="emotion-badges" id="decryptEmotionBadges"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fun-facts" id="funFact">
+            💡 Fun Fact: Your emotions are mathematically encoded into the encrypted data!
+        </div>
+    </div>
+
+    <script>
+        // Example messages
+        const examples = {
+            1: "Feeling ecstatic about joining the new AI research team, though a bit anxious about the deadlines ahead.",
+            2: "I can't believe I failed that test again. I'm so disappointed and frustrated right now.",
+            3: "Finally got the job offer! I'm thrilled and can't wait to start this new journey."
+        };
+
+        // Fun facts
+        const funFacts = [
+            "💡 Fun Fact: Your emotions are mathematically encoded into the encrypted data!",
+            "🎭 Did you know? AI can understand your feelings without reading your text!",
+            "🔐 Security meets empathy: Your words stay private, your feelings stay readable!",
+            "🚀 EmotionCipher: Because robots need to understand humans too!",
+            "💝 Privacy + Empathy = The future of emotional AI!",
+            "🎪 Your feelings are encrypted as a binary emotion signature!",
+            "🌟 Multiple emotions? No problem! We detect them all!"
+        ];
+
+        let encryptCount = 0;
+        let emotionCount = 0;
+        let decryptCount = 0;
+        let currentEncryptedData = null;
+
+        // Rotate fun facts
+        setInterval(() => {
+            const randomFact = funFacts[Math.floor(Math.random() * funFacts.length)];
+            document.getElementById('funFact').textContent = randomFact;
+        }, 5000);
+
+        function loadExample(num) {
+            document.getElementById('inputText').value = examples[num];
+            document.getElementById('inputText').focus();
+        }
+
+        async function encryptMessage() {
+            const text = document.getElementById('inputText').value.trim();
+            
+            if (!text) {
+                alert('Please enter a message first! 😊');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('encryptLoading').classList.add('active');
+            document.getElementById('encryptOutput').classList.add('hidden');
+
+            try {
+                // Call Python backend (works both locally and on Vercel)
+                const apiUrl = window.location.hostname === 'localhost' 
+                    ? 'http://localhost:5000/encrypt' 
+                    : '/api/encrypt';
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text, password: 'default_password_123' })
+                });
+
+                const data = await response.json();
+                
+                // Hide loading
+                document.getElementById('encryptLoading').classList.remove('active');
+                
+                // Show results
+                displayEncryptedResults(data);
+                
+                // Update stats
+                encryptCount++;
+                emotionCount += data.emotions.length;
+                document.getElementById('encryptCount').textContent = encryptCount;
+                document.getElementById('emotionCount').textContent = emotionCount;
+                
+                // Store for decryption
+                currentEncryptedData = data;
+                document.getElementById('decryptInput').value = data.encrypted_text;
+                
+            } catch (error) {
+                document.getElementById('encryptLoading').classList.remove('active');
+                alert('Error: Make sure the Python server is running!\n\nRun: python server.py');
+                console.error(error);
+            }
+        }
+
+        function displayEncryptedResults(data) {
+            // Show emotions
+            const emotionBadges = document.getElementById('emotionBadges');
+            emotionBadges.innerHTML = '';
+            data.emotions.forEach(emotion => {
+                const badge = document.createElement('span');
+                badge.className = `emotion-badge emotion-${emotion.toLowerCase()}`;
+                badge.textContent = getEmotionEmoji(emotion) + ' ' + emotion;
+                emotionBadges.appendChild(badge);
+            });
+
+            // Show encrypted text
+            document.getElementById('encryptedText').textContent = data.encrypted_text;
+
+            // Show AI-visible emotions
+            const aiEmotionBadges = document.getElementById('aiEmotionBadges');
+            aiEmotionBadges.innerHTML = '';
+            data.emotions.forEach(emotion => {
+                const badge = document.createElement('span');
+                badge.className = `emotion-badge emotion-${emotion.toLowerCase()}`;
+                badge.textContent = getEmotionEmoji(emotion) + ' ' + emotion;
+                aiEmotionBadges.appendChild(badge);
+            });
+
+            // Show output
+            document.getElementById('encryptOutput').classList.remove('hidden');
+        }
+
+        async function decryptMessage() {
+            if (!currentEncryptedData) {
+                alert('Please encrypt a message first! 🔐');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('decryptLoading').classList.add('active');
+            document.getElementById('decryptOutput').classList.add('hidden');
+
+            try {
+                // Call Python backend (works both locally and on Vercel)
+                const apiUrl = window.location.hostname === 'localhost' 
+                    ? 'http://localhost:5000/decrypt' 
+                    : '/api/decrypt';
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        encrypted_text: currentEncryptedData.encrypted_text,
+                        password: 'default_password_123'
+                    })
+                });
+
+                const data = await response.json();
+                
+                // Hide loading
+                document.getElementById('decryptLoading').classList.remove('active');
+                
+                // Show results
+                displayDecryptedResults(data);
+                
+                // Update stats
+                decryptCount++;
+                document.getElementById('decryptCount').textContent = decryptCount;
+                
+            } catch (error) {
+                document.getElementById('decryptLoading').classList.remove('active');
+                alert('Error decrypting! Make sure the server is running.');
+                console.error(error);
+            }
+        }
+
+        function displayDecryptedResults(data) {
+            // Show decrypted text
+            document.getElementById('decryptedText').textContent = data.original_text;
+
+            // Show emotions
+            const emotionBadges = document.getElementById('decryptEmotionBadges');
+            emotionBadges.innerHTML = '';
+            data.emotions.forEach(emotion => {
+                const badge = document.createElement('span');
+                badge.className = `emotion-badge emotion-${emotion.toLowerCase()}`;
+                badge.textContent = getEmotionEmoji(emotion) + ' ' + emotion;
+                emotionBadges.appendChild(badge);
+            });
+
+            // Show output
+            document.getElementById('decryptOutput').classList.remove('hidden');
+        }
+
+        function getEmotionEmoji(emotion) {
+            const emojiMap = {
+                'Joy': '😊',
+                'Sadness': '😢',
+                'Anger': '😡',
+                'Fear': '😱',
+                'Anxiety': '😰',
+                'Excitement': '🎉',
+                'Surprise': '😲',
+                'Neutral': '😐'
+            };
+            return emojiMap[emotion] || '🎭';
+        }
+    </script>
+</body>
+</html>

@@ -1,4 +1,6 @@
 {
+  "buildCommand": "echo 'Building...'",
+  "outputDirectory": "public",
   "builds": [
     {
       "src": "api/index.py",
