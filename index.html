@@ -497,6 +497,8 @@ Example: I'm so excited but also nervous about tomorrow!"></textarea>
                 
                 // Store for decryption
                 currentEncryptedData = data;
+                console.log('Encrypted data:', data);
+                console.log('Has payload?', !!data.payload);
                 document.getElementById('decryptInput').value = data.encrypted_text;
                 
             } catch (error) {
@@ -550,13 +552,16 @@ Example: I'm so excited but also nervous about tomorrow!"></textarea>
                     ? 'http://localhost:5000/decrypt' 
                     : '/api/decrypt';
                 
+                const requestBody = { 
+                    encrypted_text: currentEncryptedData.encrypted_text,
+                    payload: currentEncryptedData.payload || ''
+                };
+                console.log('Decrypt request:', requestBody);
+                
                 const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        encrypted_text: currentEncryptedData.encrypted_text,
-                        payload: currentEncryptedData.payload || ''
-                    })
+                    body: JSON.stringify(requestBody)
                 });
 
                 const data = await response.json();
