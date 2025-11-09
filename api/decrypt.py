@@ -31,12 +31,13 @@ class handler(BaseHTTPRequestHandler):
             encrypted_text = data.get('encrypted_text', '')
             payload = data.get('payload', '')
             
-            if not payload:
+            if not payload or payload == '':
                 self.send_response(400)
                 self.send_header('Content-type', 'application/json')
                 self.send_header('Access-Control-Allow-Origin', '*')
                 self.end_headers()
-                self.wfile.write(json.dumps({"error": "Payload is required for decryption"}).encode())
+                error_msg = "Payload is required for decryption. Please encrypt a new message (old messages from before this update won't work)."
+                self.wfile.write(json.dumps({"success": False, "error": error_msg}).encode())
                 return
             
             # Decode the payload (stateless decryption for Vercel)
