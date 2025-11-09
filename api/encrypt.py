@@ -51,6 +51,15 @@ class handler(BaseHTTPRequestHandler):
             else:
                 emotions = detected_emotions if detected_emotions else ['Neutral']
             
+            # Encode full data for stateless decryption (Vercel serverless)
+            import base64
+            full_payload = {
+                'text': message,
+                'emotions': detected_emotions
+            }
+            payload_json = json.dumps(full_payload)
+            encoded_payload = base64.b64encode(payload_json.encode()).decode()
+            
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.send_header('Access-Control-Allow-Origin', '*')
@@ -60,7 +69,8 @@ class handler(BaseHTTPRequestHandler):
                 "success": True,
                 "encrypted_text": encrypted_text,
                 "emotions": emotions,
-                "original_length": len(message)
+                "original_length": len(message),
+                "payload": encoded_payload  # Full data for decryption
             }
             self.wfile.write(json.dumps(response).encode())
             

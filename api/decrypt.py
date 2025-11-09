@@ -29,18 +29,23 @@ class handler(BaseHTTPRequestHandler):
             data = json.loads(post_data.decode('utf-8'))
             
             encrypted_text = data.get('encrypted_text', '')
+            payload = data.get('payload', '')
             
-            if not encrypted_text:
+            if not payload:
                 self.send_response(400)
                 self.send_header('Content-type', 'application/json')
                 self.send_header('Access-Control-Allow-Origin', '*')
                 self.end_headers()
-                self.wfile.write(json.dumps({"error": "Encrypted text is required"}).encode())
+                self.wfile.write(json.dumps({"error": "Payload is required for decryption"}).encode())
                 return
             
-            result = cipher.decrypt_message(encrypted_text)
-            decrypted_message = result.get('original_text')
-            detected_emotions = result.get('detected_emotions', '')
+            # Decode the payload (stateless decryption for Vercel)
+            import base64
+            payload_json = base64.b64decode(payload.encode()).decode()
+            payload_data = json.loads(payload_json)
+            
+            decrypted_message = payload_data.get('text', '')
+            detected_emotions = payload_data.get('emotions', '')
             
             # Convert formatted string to array if needed
             if isinstance(detected_emotions, str):

@@ -555,7 +555,7 @@ Example: I'm so excited but also nervous about tomorrow!"></textarea>
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
                         encrypted_text: currentEncryptedData.encrypted_text,
-                        password: 'default_password_123'
+                        payload: currentEncryptedData.payload
                     })
                 });
 
