@@ -1,12 +1,29 @@
 from http.server import BaseHTTPRequestHandler
 import json
-from emotion_cipher import EmotionCipher
+import sys
+import os
 
-cipher = EmotionCipher()
+# Add current directory to path
+sys.path.insert(0, os.path.dirname(__file__))
+
+try:
+    from emotion_cipher import EmotionCipher
+    cipher = EmotionCipher()
+except Exception as e:
+    print(f"Import error: {e}")
+    cipher = None
 
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
+            if cipher is None:
+                self.send_response(500)
+                self.send_header('Content-type', 'application/json')
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                self.wfile.write(json.dumps({"success": False, "error": "Cipher module failed to load"}).encode())
+                return
+            
             content_length = int(self.headers['Content-Length'])
             post_data = self.rfile.read(content_length)
             data = json.loads(post_data.decode('utf-8'))
