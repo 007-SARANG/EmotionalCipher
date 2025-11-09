@@ -40,7 +40,9 @@ class handler(BaseHTTPRequestHandler):
             
             result = cipher.encrypt_message(message)
             encrypted_text = result['encrypted_text']
-            emotions = result['emotions']
+            emotions = result.get('detected_emotions', [])
+            if not emotions:
+                emotions = result.get('emotions', [])
             
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
