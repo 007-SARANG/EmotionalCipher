@@ -460,10 +460,8 @@ Example: I'm so excited but also nervous about tomorrow!"></textarea>
             document.getElementById('encryptOutput').classList.add('hidden');
 
             try {
-                // Call Python backend (works both locally and on Vercel)
-                const apiUrl = window.location.hostname === 'localhost' 
-                    ? 'http://localhost:5000/encrypt' 
-                    : '/api/encrypt';
+                // Call local Python backend
+                const apiUrl = 'http://localhost:5000/encrypt';
                 
                 const response = await fetch(apiUrl, {
                     method: 'POST',
@@ -535,10 +533,8 @@ Example: I'm so excited but also nervous about tomorrow!"></textarea>
             document.getElementById('decryptOutput').classList.add('hidden');
 
             try {
-                // Call Python backend (works both locally and on Vercel)
-                const apiUrl = window.location.hostname === 'localhost' 
-                    ? 'http://localhost:5000/decrypt' 
-                    : '/api/decrypt';
+                // Call local Python backend
+                const apiUrl = 'http://localhost:5000/decrypt';
                 
                 const response = await fetch(apiUrl, {
                     method: 'POST',

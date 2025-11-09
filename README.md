@@ -2,15 +2,10 @@
 
 > **Where Feelings Stay Readable, But Words Stay Private**
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://emotional-cipher.vercel.app/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
 
 EmotionCipher is an intelligent system that encrypts text messages while preserving their emotional signatures. In the world of *Empathy Encryption*, emotional data must be **protected** but also **understood** by AI systems.
-
-## 🚀 Live Demo
-
-**Try it now:** [https://emotional-cipher.vercel.app/](https://emotional-cipher.vercel.app/)
 
 ## 🎥 Video Demonstration
 
